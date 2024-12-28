@@ -5,6 +5,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./dbConn'); 
 const { AddUser, Booking ,UserLogin } = require('./ApiFunctions');
+const authenticateToken = require('./Middlewares')
 
 dotenv.config();
 const app = express();
@@ -16,7 +17,7 @@ app.use(bodyParser.json());
 connectDB();
 
 app.post('/addUser', AddUser);
-app.post('/booking', Booking);
+app.post('/booking',authenticateToken, Booking);
 app.post('/login',UserLogin);
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

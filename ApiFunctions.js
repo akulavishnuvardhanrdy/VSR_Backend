@@ -1,7 +1,9 @@
 const Users = require('./Models/Users');
 const BookingDetails = require('./Models/BookingDetails');
-
+const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
+
+dotenv.config();
 const secretKey = process.env.JWT_SECRET;
 const jwt = require('jsonwebtoken');
 
