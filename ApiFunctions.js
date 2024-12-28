@@ -2,6 +2,8 @@ const Users = require('./Models/Users');
 const BookingDetails = require('./Models/BookingDetails');
 
 const bcrypt = require('bcrypt');
+const secretKey = process.env.JWT_SECRET;
+const jwt = require('jsonwebtoken');
 
 const AddUser = async (req, res) => {
   try {
@@ -18,22 +20,23 @@ const AddUser = async (req, res) => {
 const UserLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
-
     if (!email || !password) {
       return res.status(400).json({ error: 'Email and password are required' });
     }
-
     const user = await Users.findOne({ email });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ error: 'Invalid password' });
     }
-
-    res.status(200).json({ message: 'Login successful', data: user });
+    const token = jwt.sign(
+        { userId: user._id, email: user.email },
+        secretKey,
+        { expiresIn: '1h' }
+    );
+    res.status(200).json({ message: 'Login successful', token });
   } catch (err) {
     res.status(500).json({ error: 'An error occurred during login' });
   }
