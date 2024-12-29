@@ -17,7 +17,7 @@ const bookingDetailsSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Gender is required'],
     enum: {
-      values: ['Male', 'Female', 'Other'],
+      values: ['Male', 'Female', 'Other' , 'male' , 'female' , 'others'],
       message: 'Invalid Gender',
     },
   },

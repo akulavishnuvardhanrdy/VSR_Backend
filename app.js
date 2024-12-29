@@ -11,10 +11,19 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 // Configure CORS to allow only the specified origin
+const allowedOrigins = [
+  'https://vsr-booking.onrender.com',
+  'http://localhost:5173', // Add your new origin here
+];
+
 app.use(cors({
-  origin: 'https://vsr-booking.onrender.com',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 app.use(bodyParser.json());
