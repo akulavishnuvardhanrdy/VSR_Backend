@@ -13,7 +13,7 @@ const port = process.env.PORT || 4000;
 // Configure CORS to allow only the specified origin
 const allowedOrigins = [
   'https://vsr-booking.onrender.com',
-  '65.0.178.124/',
+  'http://65.0.178.124',
   'http://localhost:5173', // Add your new origin here
 ];
 
